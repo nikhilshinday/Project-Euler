@@ -7,10 +7,5 @@ def enumerate_fib(n):
 			arr.append(b)
 	return arr
 
-def is_even(x):
-		return x % 2 == 0
-
-def add(x,y): return x+y
-
-print(reduce(add,filter(is_even, enumerate_fib(4000000))))
+print(reduce(lambda x,y: x+y,filter(lambda x: x%2, enumerate_fib(4000000))))
 

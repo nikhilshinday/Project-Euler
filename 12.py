@@ -1,29 +1,31 @@
-from sets import Set
+import math
+import collections
+# choose(n+1,2) for the nth triangle number is the triangle number itself.
+# then, the range of numbers that can be included in the factors are up
+# to the previous choices up to two for all levels. 
 
-def calculate_nth_triangle_num(n):
-	sum = 0
-	for i in range(1,n+1):
-		sum += i
-	return sum
+def prime_factors(n):
+    	"""Returns all the prime factors of a positive integer"""
+    	factors = []
+    	d = 2
+    	while n > 1:
+        	while n % d == 0:
+            		factors.append(d)
+            		n /= d
+        	d = d + 1
+    	return factors
+
+def format_prime(l):
+	return collections.Counter(l)
+
+def num_factors(c):
+	return reduce(lambda x,y: (y + 1) * x, c.values(), 1)
 
 
-guess = 1
 
-factors = Set([])
-
-while guess < 10:
-	triangle_num = calculate_nth_triangle_num(guess)
-	factors.add(triangle_num)
-	factors.add(1)
-
-	print "guess: ", guess, " triangle_num: ", triangle_num
-	for i in range(1,triangle_num+1):
-		if triangle_num % i == 0:
-			factors.add(i)
-	print factors
-	print len(factors)
-	if len(factors) > 500:
-		break
-	else: 
-		guess += 1
-		factors = Set([])
+triangle_num = 1
+triangle_sum = 1
+while num_factors(format_prime(prime_factors(triangle_sum))) < 500:
+	triangle_num += 1
+	triangle_sum += triangle_num
+print triangle_sum
